@@ -1,0 +1,26 @@
+{
+	"Memory": {
+		"Enabled": true,
+		"Populate": false,
+		"Domains": ["example.com"]
+	},
+	"Imap": {
+		"Enabled": true,
+		"Hostname": "mail.example.com",
+		"Tls": true,
+		"Suffix": "@example.com"
+	},
+	"Smtp": {
+		"Enabled": true,
+		"Hostname": "mail.example.com",
+		"Port": 587,
+		"Suffix": "@example.com"
+	},
+	"Disk": {
+		"Enabled": true,
+		"Keys": { "Directory": "db/keys" },
+		"Contacts": { "Directory": "db/contacts" },
+		"UsersSettings": { "Directory": "db/settings" },
+		"Addresses": { "Directory": "db/addresses" }
+	}
+}

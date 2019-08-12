@@ -1,0 +1,11 @@
+--- LatexRunner.js	2017-06-28 10:47:04.829605540 -0400
++++ LatexRunner.new	2017-06-28 10:50:00.185734343 -0400
+@@ -82,7 +82,7 @@
+         return CommandRunner.kill(ProcessTable[id], callback);
+       }
+     },
+-    _latexmkBaseCommand: ((Settings != null ? (_ref1 = Settings.clsi) != null ? _ref1.latexmkCommandPrefix : void 0 : void 0) || []).concat(["latexmk", "-cd", "-f", "-jobname=output", "-auxdir=$COMPILE_DIR", "-outdir=$COMPILE_DIR", "-synctex=1", "-interaction=batchmode"]),
++    _latexmkBaseCommand: ((Settings != null ? (_ref1 = Settings.clsi) != null ? _ref1.latexmkCommandPrefix : void 0 : void 0) || []).concat(["latexmk", "-cd", "-f", "-jobname=output", "-auxdir=$COMPILE_DIR", "-outdir=$COMPILE_DIR", "-synctex=1", "-shell-escape", "-interaction=batchmode", "-r", "/usr/local/share/latexmk/latexmk"]),
+     _pdflatexCommand: function(mainFile) {
+       return LatexRunner._latexmkBaseCommand.concat(["-pdf", Path.join("$COMPILE_DIR", mainFile)]);
+     },

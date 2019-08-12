@@ -1,0 +1,40 @@
+my $root_file = $ARGV[-1];
+my $base_file = $root_file =~ s/.(Rtex|Rnw|tex)$//r;
+my $tex_file = $base_file . '.tex';
+my $rtex_file = $base_file . '.Rtex';
+my $rnw_file = $base_file . '.Rnw';
+my $base_dir = dirname $base_file;
+
+add_cus_dep( 'Rnw', 'tex', 0, 'rnw_to_tex');
+add_cus_dep( 'Rtex', 'tex', 0, 'rtex_to_tex');
+
+unless (-e $tex_file) {
+  if (-e $rnw_file) {
+    do_knitr($rnw_file);
+  }
+  if (-e $rtex_file) {
+    do_knitr($rtex_file);
+  }
+}
+
+my $pdf_latex_old = $pdflatex =~ s/%S/$tex_file/r;
+
+$pdflatex = $pdf_latex_old ."; Rscript -e 'library(patchSynctex); setwd(%Z); patchSynctex(\"".basename($base_file)."\",%#B,verbose=TRUE) ' ";
+
+sub rtex_to_tex {
+  print "Knitting Rtex file\n";
+  do_knitr("$_[0].Rtex");
+}
+
+sub rnw_to_tex {
+  print "Knitting Rnw file\n";
+  do_knitr("$_[0].Rnw");
+}
+
+sub do_knitr {
+  my $dirname = dirname $_[0];
+  my $basename = basename $_[0];
+  print "Now Knitting $basename\n";
+  system("Rscript -e \"options(knitr.package.concordance=TRUE);library('knitr'); setwd('$dirname'); knit('$basename')\"");
+}
+
